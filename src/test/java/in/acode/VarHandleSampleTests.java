@@ -62,7 +62,7 @@ public class VarHandleSampleTests {
                 500, TimeUnit.MILLISECONDS);
 
 
-        //Start a thread which would exit only after the changed value of x is visible
+        //Start a thread which would exit only after the changed values of all variables are visible
         Thread pollingThread = new Thread(() -> {
             while (true) {
                 if ((int) VarHandleContainer.X.getAcquire(varHandleContainer) == 1) {
