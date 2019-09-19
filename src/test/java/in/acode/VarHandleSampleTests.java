@@ -37,7 +37,7 @@ public class VarHandleSampleTests {
 
 
         //Start a thread which would exit only after the changed value of x is visible
-        Thread thread1 = new Thread(() -> {
+        Thread pollingThread = new Thread(() -> {
             while (true) {
                 if ((int) VarHandleContainer.X.getOpaque(varHandleContainer) == 1) {
                     System.out.println("Successfully read the value written by another thread in opaque mode!");
@@ -46,8 +46,8 @@ public class VarHandleSampleTests {
             }
         });
 
-        thread1.start();
-        thread1.join();
+        pollingThread.start();
+        pollingThread.join();
     }
 
     @Test(timeout = 1000)
@@ -63,7 +63,7 @@ public class VarHandleSampleTests {
 
 
         //Start a thread which would exit only after the changed value of x is visible
-        Thread thread1 = new Thread(() -> {
+        Thread pollingThread = new Thread(() -> {
             while (true) {
                 if ((int) VarHandleContainer.X.getAcquire(varHandleContainer) == 1) {
                     assertEquals(1, varHandleContainer.y);
@@ -73,8 +73,8 @@ public class VarHandleSampleTests {
             }
         });
 
-        thread1.start();
-        thread1.join();
+        pollingThread.start();
+        pollingThread.join();
     }
 
     private void executeAfterDelay(Runnable r, long delay, TimeUnit timeUnit) {
